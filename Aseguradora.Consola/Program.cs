@@ -45,7 +45,7 @@ agregarVehiculo.Ejecutar(vehiculo2);
 eliminarVehiculo.Ejecutar(2);
 
 
-/*
+
 try
 {  
     List<Titular>? listaCompleta = listarVehiculosTitular.Ejecutar;
@@ -67,4 +67,4 @@ var lista = listarTitulares.Ejecutar();
 foreach(Titular t in lista)
 {
     Console.WriteLine(t);
-}*/
+}

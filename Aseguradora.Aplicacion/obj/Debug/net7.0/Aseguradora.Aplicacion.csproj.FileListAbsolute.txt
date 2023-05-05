@@ -10,3 +10,15 @@
 /home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/refint/Aseguradora.Aplicacion.dll
 /home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/Aseguradora.Aplicacion.pdb
 /home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/ref/Aseguradora.Aplicacion.dll
+/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/bin/Debug/net7.0/Aseguradora.Aplicacion.deps.json
+/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/bin/Debug/net7.0/Aseguradora.Aplicacion.dll
+/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/bin/Debug/net7.0/Aseguradora.Aplicacion.pdb
+/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/Aseguradora.Aplicacion.csproj.AssemblyReference.cache
+/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/Aseguradora.Aplicacion.GeneratedMSBuildEditorConfig.editorconfig
+/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/Aseguradora.Aplicacion.AssemblyInfoInputs.cache
+/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/Aseguradora.Aplicacion.AssemblyInfo.cs
+/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/Aseguradora.Aplicacion.csproj.CoreCompileInputs.cache
+/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/Aseguradora.Aplicacion.dll
+/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/refint/Aseguradora.Aplicacion.dll
+/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/Aseguradora.Aplicacion.pdb
+/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/ref/Aseguradora.Aplicacion.dll

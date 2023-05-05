@@ -46,19 +46,19 @@
     ]
   },
   "packageFolders": {
-    "/home/mark/.nuget/packages/": {}
+    "/home/alumnos/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Consola/Aseguradora.Consola.csproj",
+      "projectUniqueName": "/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Consola/Aseguradora.Consola.csproj",
       "projectName": "Aseguradora.Consola",
-      "projectPath": "/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Consola/Aseguradora.Consola.csproj",
-      "packagesPath": "/home/mark/.nuget/packages/",
-      "outputPath": "/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Consola/obj/",
+      "projectPath": "/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Consola/Aseguradora.Consola.csproj",
+      "packagesPath": "/home/alumnos/.nuget/packages/",
+      "outputPath": "/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Consola/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/mark/.nuget/NuGet/NuGet.Config"
+        "/home/alumnos/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -70,11 +70,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj": {
-              "projectPath": "/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj"
+            "/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj": {
+              "projectPath": "/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj"
             },
-            "/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Repositorios/Aseguradora.Repositorios.csproj": {
-              "projectPath": "/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Repositorios/Aseguradora.Repositorios.csproj"
+            "/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Repositorios/Aseguradora.Repositorios.csproj": {
+              "projectPath": "/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Repositorios/Aseguradora.Repositorios.csproj"
             }
           }
         }
@@ -104,7 +104,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.202/RuntimeIdentifierGraph.json"
       }
     }
   }
