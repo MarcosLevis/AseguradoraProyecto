@@ -1,0 +1,12 @@
+/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/bin/Debug/net7.0/Aseguradora.Aplicacion.deps.json
+/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/bin/Debug/net7.0/Aseguradora.Aplicacion.dll
+/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/bin/Debug/net7.0/Aseguradora.Aplicacion.pdb
+/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/Aseguradora.Aplicacion.csproj.AssemblyReference.cache
+/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/Aseguradora.Aplicacion.GeneratedMSBuildEditorConfig.editorconfig
+/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/Aseguradora.Aplicacion.AssemblyInfoInputs.cache
+/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/Aseguradora.Aplicacion.AssemblyInfo.cs
+/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/Aseguradora.Aplicacion.csproj.CoreCompileInputs.cache
+/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/Aseguradora.Aplicacion.dll
+/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/refint/Aseguradora.Aplicacion.dll
+/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/Aseguradora.Aplicacion.pdb
+/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/obj/Debug/net7.0/ref/Aseguradora.Aplicacion.dll

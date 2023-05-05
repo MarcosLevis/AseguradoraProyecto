@@ -1,0 +1,35 @@
+Consultas de la Aplicacion
+
+Hay que documentar????
+
+Metodos locales?:
+En la consigna esta esta linea
+//listamos los titulares utilizando un método local
+ListarTitulares();  QUE ES?
+
+Metodos toString:
+
+Como hago para elegir que metodo toString imprimir. Es decir, quiero que el usuario pueda imprimir solo los titulares y que tambien elija si quiere imprimir los titulares con sus vehiculos
+La consigna dice esto: Invalidar el método ToString() en las clases donde sea conveniente.
+
+
+
+
+
+
+Creacion de Clases:
+Como creamos constructores?
+Hacemos uso de propiedades? o vi privadas? geters? LLEVAN SETTERSSSS?
+El ejemplo de la classe Persona esta bien?
+
+
+Tema ID:
+En el ejemplo de consola hay un constructor donde nunca pasan el id como parametro.
+Nunca deberia pasarse comom parametro el id? Como hacemos para que se genere solo y sea unico?
+Esto va en respositorio? Como se hace?
+
+
+Clases:
+En la consigna dice que cada entidad conoce otra entidad a traves de su id en la base de datos. Que significa esto?
+Entonces esta mal que conozca el objeto entero y la propiedad sea de tipo Titular, por ej?
+Esta bien que en Persona sean protected las propiedades
