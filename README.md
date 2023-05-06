@@ -1,1 +1,1 @@
-Proyecto Aseguradora es un proyecto integrador del seminario de lenguajes .Net c# de la Facultad de Informatica de la UNLP.
+Proyecto integrador del Seminario de Lenguajes .Net C# de la Facultad de Informatica de la Universidad Nacional de La Plata.
