@@ -1,104 +1,67 @@
 namespace Aseguradora.Repositorios;
-
-
 public class RepositorioPolizaTXT : IRepositorioPoliza
 {
     readonly string path = "./polizas.txt";
     readonly string _nombreArch = "polizas.txt";
-
-    readonly string pathVehiculos = "./vehiculos.txt";
-    readonly string _nombreVehiculos = "vehiculos.txt";
-
     int id = 1;
-
     public void AgregarPoliza(Poliza poliza)        
     {   
-        if (!existePoliza(poliza.VehiculoId))
-        {
-            if (poliza.Vehiculo != null)
+                  
+        if (File.Exists(path)){   
+            using var sw = new StreamWriter(_nombreArch, true);
             {
-                poliza.VehiculoId = idTitular(poliza.Vehiculo.Dominio);
+                poliza.Id = proximaId();
+                sw.WriteLine($"{poliza.Id}*{poliza.ValorAsegurado}*{poliza.Cobertura}*{poliza.Franquicia}*{poliza.FechaInicio}*{poliza.FechaFin}*{poliza.VehiculoId}");
+            }            
+        }else 
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                poliza.Id = id++;         
+                sw.WriteLine($"{poliza.Id}*{poliza.ValorAsegurado}*{poliza.Cobertura}*{poliza.Franquicia}*{poliza.FechaInicio}*{poliza.FechaFin}*{poliza.VehiculoId}");                              
             }
-            if (File.Exists(path)){   
-                using var sw = new StreamWriter(_nombreArch, true);
-                {
-                    poliza.Id = proximaId();
-                    sw.WriteLine($"{poliza.Id},{poliza.VehiculoId},{poliza.Valor_asegurado},{poliza.Cobertura},{poliza.Franquicia},{poliza.Fecha_inicio},{poliza.Fecha_fin}");
-                }            
-            }else 
-                using (StreamWriter sw = File.AppendText(path))
-                {
-                    poliza.Id = id++;         
-                    sw.WriteLine($"{poliza.Id},{poliza.VehiculoId},{poliza.Valor_asegurado},{poliza.Cobertura},{poliza.Franquicia},{poliza.Fecha_inicio},{poliza.Fecha_fin}");                              
-                }
-        }else
-        {
-            Console.WriteLine("Ya esta registrada esta poliza");
-        }
+   
     }   
 
     //Se queda con la ultima id ya registrada en el text y retorno el siguiente numero
     private int proximaId()
     {        
-        int id = int.Parse(File.ReadLines(path).Last().Split(",")[0]); 
+        int id = int.Parse(File.ReadLines(path).Last().Split("*")[0]); 
         return id +1 ;
     }
 
-    private int idTitular(string dominio){
-        if (File.Exists(pathVehiculos)){
-            using var sr = new StreamReader(_nombreVehiculos);
-            string str = sr.ReadLine() ?? "";
-            string d = (str.Split(",")[1]); //dominio esta en 1
-            int id = int.Parse(str.Split(",")[0]);
-            
-            while((!sr.EndOfStream) && (d != dominio))
-            {
-                str = sr.ReadLine() ?? "";
-                d = (str.Split(",")[1]); 
-                id = int.Parse(str.Split(",")[0]);
-            }
-            if (d == dominio){
-                return id;
-            }
-        } 
-        return -1;         
-    }
-
-//listo
-    private Boolean existePoliza(int? idTitular)
+    private Boolean existePoliza(int idVehiculo)
     {
         if (File.Exists(path)){
             using var sr = new StreamReader(_nombreArch);
             while(!sr.EndOfStream)
             {
                 string str = sr.ReadLine() ?? "";
-                int d = int.Parse(str.Split(",")[1]); 
-                if(d == idTitular)
+                int d = int.Parse(str.Split("*")[6]); 
+                if(d == idVehiculo)
                 {
                     return true;
                 }
             }  
         }                  
         return false;        
-    }  
-
-    public void ModificarVehiculo(Vehiculo vehiculo)
+    } 
+    public void ModificarPoliza(Poliza poliza)
     {
         using var sr = new StreamReader(_nombreArch);
         var t = new Vehiculo();
         string str = sr.ReadLine() ?? "";
-        int idN = int.Parse(str.Split(",")[0]);
-        while(!sr.EndOfStream && (idN!= vehiculo.Id))
+        int idN = int.Parse(str.Split("*")[0]);
+        while(!sr.EndOfStream && (idN!= poliza.Id))
         {
              str = sr.ReadLine() ?? "";           
-             idN = int.Parse(str.Split(",")[0]);          
+             idN = int.Parse(str.Split("*")[0]);          
         }
         //transforma todo el texto en un array donde cada linea es un inidice, luego me paro en el inidice = id-1 y lo sobreescribo
-        if(idN == vehiculo.Id)
+        if(idN == poliza.Id)
         {
             string[] lines = File.ReadAllLines(path);
-            vehiculo.Id = idN;
-            lines[idN-1] = ($"{vehiculo.Id},{vehiculo.Dominio},{vehiculo.Marca},{vehiculo.Anio},{vehiculo.TitularId}");
+            poliza.Id = idN;
+            lines[idN-1] = ($"{poliza.Id}*{poliza.ValorAsegurado}*{poliza.Cobertura}*{poliza.Franquicia}*{poliza.FechaInicio}*{poliza.FechaFin}*{poliza.VehiculoId}");
             using (StreamWriter sw = new StreamWriter(path)) 
             {
                 foreach (string line in lines) 
@@ -108,31 +71,55 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
             }
         }   
     }
-
-
-    public void EliminarVehiculo(int id)
+    public void EliminarPoliza(int id)
     {
         using var sr = new StreamReader(_nombreArch);
-        var t = new Vehiculo();
+        var p = new Poliza();
         string str = sr.ReadLine() ?? "";
-        t.Id = int.Parse(str.Split(",")[0]);
-        t.Dominio = (str.Split(",")[1]);
-        t.Marca = (str.Split(",")[2]);
-        t.Anio = int.Parse(str.Split(",")[3]);  
-        t.TitularId = int.Parse(str.Split(",")[4]);   
-        while(!sr.EndOfStream && (t.Id != id))
+        p.Id = int.Parse(str.Split("*")[0]);
+        p.ValorAsegurado = double.Parse(str.Split("*")[1]);
+        p.Cobertura = str.Split("*")[2];
+        p.Franquicia = str.Split("*")[3];  
+        p.FechaInicio = DateTime.Parse(str.Split("*")[4]);   
+        p.FechaFin = DateTime.Parse(str.Split("*")[5]);  
+        p.VehiculoId = int.Parse(str.Split("*")[6]); 
+        while(!sr.EndOfStream && (p.Id != id))
         {
             str = sr.ReadLine() ?? "";
-            t.Id = int.Parse(str.Split(",")[0]);
-            t.Dominio = (str.Split(",")[1]);
-            t.Marca = (str.Split(",")[2]);
-            t.Anio = int.Parse(str.Split(",")[3]);    
-            t.TitularId = int.Parse(str.Split(",")[4]);      
+            p.Id = int.Parse(str.Split("*")[0]);
+            p.ValorAsegurado = double.Parse(str.Split("*")[1]);
+            p.Cobertura = (str.Split("*")[2]);
+            p.Franquicia = str.Split("*")[3];  
+            p.FechaInicio = DateTime.Parse(str.Split("*")[4]);   
+            p.FechaFin = DateTime.Parse(str.Split("*")[5]);  
+            p.VehiculoId = int.Parse(str.Split("*")[6]);     
         }
-        if(t.Id == id)
+        if(p.Id == id)
         {
-            t.Dominio = "ELIMINAD@";
-            ModificarVehiculo(t);
+            p.Franquicia = "ELIMINAD@";
+            ModificarPoliza(p);
         }
+    }
+    public List<Poliza> ListarPolizas()
+    {
+        var lista = new List<Poliza>();
+        using var sr = new StreamReader(_nombreArch);
+        while (!sr.EndOfStream)
+        {
+            var p = new Poliza();
+            string str = sr.ReadLine() ?? "";
+            p.Id = int.Parse(str.Split("*")[0]);
+            p.ValorAsegurado = double.Parse(str.Split("*")[1]);
+            p.Cobertura = (str.Split("*")[2]);
+            p.Franquicia = str.Split("*")[3];  
+            p.FechaInicio = DateTime.Parse(str.Split("*")[4]);   
+            p.FechaFin = DateTime.Parse(str.Split("*")[5]);  
+            p.VehiculoId = int.Parse(str.Split("*")[6]);   
+            if (p.Franquicia != "ELIMINAD@")
+            {
+                lista.Add(p);
+            }
+        }
+        return lista;
     }
 }

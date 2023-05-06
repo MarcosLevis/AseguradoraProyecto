@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj": {}
+    "/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj": {}
   },
   "projects": {
-    "/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj": {
+    "/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj",
+        "projectUniqueName": "/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj",
         "projectName": "Aseguradora.Aplicacion",
-        "projectPath": "/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj",
-        "packagesPath": "/home/alumnos/.nuget/packages/",
-        "outputPath": "/home/alumnos/primeraentrega/AseguradoraProyecto/Aseguradora.Aplicacion/obj/",
+        "projectPath": "/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj",
+        "packagesPath": "/home/mark/.nuget/packages/",
+        "outputPath": "/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/alumnos/.nuget/NuGet/NuGet.Config"
+          "/home/mark/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -53,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.202/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
         }
       }
     }

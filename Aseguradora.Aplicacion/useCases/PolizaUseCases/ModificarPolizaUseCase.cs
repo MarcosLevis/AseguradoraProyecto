@@ -2,15 +2,15 @@ namespace Aseguradora;
 
 public class ModificarPolizaUseCase
 {
-       private readonly IRepositorioPoliza _mirepo;
+       private readonly IRepositorioPoliza _repoPoliza;
 
-    public ModificarPolizaUseCase (IRepositorioPoliza mirepo)
+    public ModificarPolizaUseCase (IRepositorioPoliza repoPoliza)
     {
-        this._mirepo = mirepo;
+        this._repoPoliza = repoPoliza;
     }
 
-    public void Ejecutar(Poliza titular)
+    public void Ejecutar(Poliza poliza)
     {
-        _mirepo.ModificarPoliza(titular);
+        _repoPoliza.ModificarPoliza(poliza);
     }
 }
