@@ -42,8 +42,12 @@ PersistirTitular(titular1);
 PersistirTitular(titular2);
 PersistirTitular(titular3);
 PersistirTitular(titular4);
+PersistirTitular(titular1);
+
 ModificarTitular(titularModificar);  
+
 EliminarTitular(1);          
+EliminarTitular(18);
 
 //Instanciamos los vehiculos de los titulares ya persistidos
 Vehiculo vehiculo1 = new Vehiculo("CDA123","Chevrolet",2012,titular2);
@@ -62,8 +66,12 @@ PersistirVehiculo(vehiculo3);
 PersistirVehiculo(vehiculo4);
 PersistirVehiculo(vehiculo5);
 PersistirVehiculo(vehiculo6);
+PersistirVehiculo(vehiculo1);
+
 ModificarVehiculo(vehiculoModificar);
+
 EliminarVehiculo(6);
+EliminarVehiculo(18);
 
 //Instanciamos las polizas de los titulares ya persisitidos
 DateTime inicio = new DateTime(2012,04,04);
@@ -79,13 +87,20 @@ PersistirPoliza(poliza1);
 PersistirPoliza(poliza2);
 PersistirPoliza(poliza3);
 PersistirPoliza(poliza4);
-ModificarPoliza(polizaModificar);
-EliminarPoliza(2);
+PersistirPoliza(poliza1);
 
+ModificarPoliza(polizaModificar);
+
+EliminarPoliza(2);
+EliminarPoliza(18);
+
+
+//Listamos todos los Titulares, Vehiculos y Poliza. Ademas los titulares con sus autos.
 ListarTitulares();
 ListarVehiculos();
 ListarPolizas();
 listarTitularesConSusVehiculos.Ejecutar();
+
 
 void PersistirTitular(Titular titular)
 {
@@ -109,11 +124,11 @@ void ModificarTitular(Titular titular)
         Console.WriteLine(e.Message);
     }
 }
-void EliminarTitular(int dni)
+void EliminarTitular(int id)
 {
     try
     {
-        eliminarTitular.Ejecutar(dni);
+        eliminarTitular.Ejecutar(id);
     }
     catch (Exception e)
     {
