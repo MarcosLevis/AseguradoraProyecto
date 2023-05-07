@@ -16,6 +16,7 @@ public class ListarTitularesConSusVehiculosUseCase
         foreach (Titular t in listaT)
         {
             Console.WriteLine();
+            Console.WriteLine("Titular");
             Console.WriteLine(t);            
             var lista = this._repoVehiculo.ListarVehiculosDelTitular(t.Id);
             Console.WriteLine("Vehiculos: ");
@@ -23,7 +24,7 @@ public class ListarTitularesConSusVehiculosUseCase
             {
                 Console.WriteLine(v); 
             }
-                  
+                
         }
            
     }

@@ -32,18 +32,18 @@ var listarTitularesConSusVehiculos = new ListarTitularesConSusVehiculosUseCase(r
 
 //Instanciamos Titulares
 Titular titular1 = new Titular(1,"Gomez","Elgomero",2275624,"micasa","gomezez.com");
-Titular titular2 = new Titular(2,"Rodriguez","TOmas",257854,"micasa","gomez@gomez.com");
+Titular titular2 = new Titular(2,"Rodriguez","Tomas",257854,"micasa","gomez@gomez.com");
 Titular titular3 = new Titular(3,"Torres","Diego",42628734,"micasa","gomez@gomom.com");
 Titular titular4 = new Titular(4,"LaExploradora","Dora",11985124,"micasa","g@gomez.com");
-Titular titularModificar = new Titular(5,"Modificado","Mod",1249824,"micasa","z@gomez.com");
+Titular titularModificar = new Titular(4,"Modificado","Mod",1249824,"micasa","z@gomez.com");
 
-//Probamos los Casos de uso Titular
-agregarTitular.Ejecutar(titular1);
-agregarTitular.Ejecutar(titular2);
-agregarTitular.Ejecutar(titular3);
-agregarTitular.Ejecutar(titular4);
-modificarTitular.Ejecutar(titularModificar);  
-eliminarTitular.Ejecutar(1);          
+//Persistimos los titulares y probamos los Casos de uso 
+PersistirTitular(titular1);
+PersistirTitular(titular2);
+PersistirTitular(titular3);
+PersistirTitular(titular4);
+ModificarTitular(titularModificar);  
+EliminarTitular(1);          
 
 //Instanciamos los vehiculos de los titulares ya persistidos
 Vehiculo vehiculo1 = new Vehiculo("CDA123","Chevrolet",2012,titular2);
@@ -52,63 +52,167 @@ Vehiculo vehiculo3 = new Vehiculo("ASE121","Ford",2012,titular3);
 Vehiculo vehiculo4 = new Vehiculo("CSA321","Ford",2013,titular4);
 Vehiculo vehiculo5 = new Vehiculo("HSA321","Ford",2014,titular4);
 Vehiculo vehiculo6 = new Vehiculo("ESA321","Ford",2015,titular4);
-Vehiculo vehiculoModificar = new Vehiculo("ESA321","Ford",2015,titular4);
+Vehiculo vehiculoModificar = new Vehiculo("ASE121","Ford",2000,titular4);
 
 
-// Probamos los Casos de uso Vehiculo
-agregarVehiculo.Ejecutar(vehiculo1);
-agregarVehiculo.Ejecutar(vehiculo2);
-agregarVehiculo.Ejecutar(vehiculo3);
-agregarVehiculo.Ejecutar(vehiculo4);
-agregarVehiculo.Ejecutar(vehiculo5);
-agregarVehiculo.Ejecutar(vehiculo6);
-modificarVehiculo.Ejecutar(vehiculoModificar);
-eliminarVehiculo.Ejecutar(6);
+//Persistimos los vehiculos y probamos los Casos de uso 
+PersistirVehiculo(vehiculo1);
+PersistirVehiculo(vehiculo2);
+PersistirVehiculo(vehiculo3);
+PersistirVehiculo(vehiculo4);
+PersistirVehiculo(vehiculo5);
+PersistirVehiculo(vehiculo6);
+ModificarVehiculo(vehiculoModificar);
+EliminarVehiculo(6);
 
 //Instanciamos las polizas de los titulares ya persisitidos
 DateTime inicio = new DateTime(2012,04,04);
-DateTime fin = new DateTime(2012,04,04);
+DateTime fin = new DateTime(2032,04,04);
 Poliza poliza1 = new Poliza(20030.123,"Responsabilidad Civil","Completa",inicio,fin,vehiculo1);
 Poliza poliza2 = new Poliza(29780.123,"Responsabilidad Civil","Completa",inicio,fin,vehiculo2);
 Poliza poliza3 = new Poliza(26430.123,"Responsabilidad Civil","Completa",inicio,fin,vehiculo3);
 Poliza poliza4 = new Poliza(24530.123,"Responsabilidad Civil","Completa",inicio,fin,vehiculo4);
-Poliza polizaModificar = new Poliza(26730.123,"Responsabilidad Civil","Completa",inicio,fin,vehiculo4);
+Poliza polizaModificar = new Poliza(9999.123,"Responsabilidad Civil","Completa",inicio,fin,vehiculo4);
 
-//Persistimos las polizas
-agregarPoliza.Ejecutar(poliza1);
-agregarPoliza.Ejecutar(poliza2);
-agregarPoliza.Ejecutar(poliza3);
-agregarPoliza.Ejecutar(poliza4);
-modificarPoliza.Ejecutar(polizaModificar);
-eliminarPoliza.Ejecutar(2);
+//Probamos los Casos de uso Poliza
+PersistirPoliza(poliza1);
+PersistirPoliza(poliza2);
+PersistirPoliza(poliza3);
+PersistirPoliza(poliza4);
+ModificarPoliza(polizaModificar);
+EliminarPoliza(2);
 
 ListarTitulares();
 ListarVehiculos();
 ListarPolizas();
 listarTitularesConSusVehiculos.Ejecutar();
 
+void PersistirTitular(Titular titular)
+{
+    try
+    {
+        agregarTitular.Ejecutar(titular);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
+void ModificarTitular(Titular titular)
+{
+    try
+    {
+        modificarTitular.Ejecutar(titular);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
+void EliminarTitular(int dni)
+{
+    try
+    {
+        eliminarTitular.Ejecutar(dni);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
 void ListarTitulares()
 {
-    var lista = listarTitulares.Ejecutar();
+    Console.WriteLine();
+    Console.WriteLine("Titulares:");
+    List<Titular> lista = listarTitulares.Ejecutar();
     foreach(Titular t in lista)
     {
         Console.WriteLine(t);
     }
 }
+void PersistirVehiculo(Vehiculo vehiculo)
+{
+    try
+    {
+        agregarVehiculo.Ejecutar(vehiculo);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
+void ModificarVehiculo(Vehiculo vehiculo)
+{
+    try
+    {
+        modificarVehiculo.Ejecutar(vehiculo);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
+void EliminarVehiculo(int id)
+{
+    try
+    {
+        eliminarVehiculo.Ejecutar(id);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
 void ListarVehiculos()
 {
-    var lista = listarVehiculos.Ejecutar();
+    Console.WriteLine();
+    Console.WriteLine("Vehiculos: ");
+    List<Vehiculo> lista = listarVehiculos.Ejecutar();
     foreach(Vehiculo v in lista)
     {
         Console.WriteLine(v);
     }
 }
+void PersistirPoliza(Poliza poliza)
+{
+    try
+    {
+        agregarPoliza.Ejecutar(poliza);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
+void ModificarPoliza(Poliza poliza)
+{
+    try
+    {
+        modificarPoliza.Ejecutar(poliza);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
+void EliminarPoliza(int id)
+{
+    try
+    {
+        eliminarPoliza.Ejecutar(id);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
 void ListarPolizas()
 {
-    var lista = listarPolizas.Ejecutar();
+    Console.WriteLine();
+    Console.WriteLine("Polizas: ");
+    List<Poliza> lista = listarPolizas.Ejecutar();
     foreach(Poliza p in lista)
     {
         Console.WriteLine(p);
     }
 }
-
