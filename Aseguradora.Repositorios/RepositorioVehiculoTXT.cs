@@ -1,6 +1,4 @@
 ﻿namespace Aseguradora.Repositorios;
-using Aseguradora.Aplicacion;
-
 public class RepositorioVehiculoTXT : IRepositorioVehiculo
 {
     readonly string path = "./vehiculos.txt";

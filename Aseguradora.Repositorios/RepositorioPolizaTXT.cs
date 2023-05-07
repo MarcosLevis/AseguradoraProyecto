@@ -1,5 +1,3 @@
-using System.Globalization;
-
 namespace Aseguradora.Repositorios;
 public class RepositorioPolizaTXT : IRepositorioPoliza
 {

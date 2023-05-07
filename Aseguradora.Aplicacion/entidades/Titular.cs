@@ -17,7 +17,4 @@ public class Titular: Persona
         return   $"{Id}: {Nombre} {Apellido} {Dni} {Telefono} {Direccion} {Correo}";
     }
 
-
-
-
 }
