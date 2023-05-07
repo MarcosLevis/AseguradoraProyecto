@@ -150,7 +150,7 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
             vehiculo.Marca = (str.Split("*")[2]);
             vehiculo.Anio = int.Parse(str.Split("*")[3]);
             vehiculo.TitularId = int.Parse(str.Split("*")[4]);
-            if (vehiculo.TitularId == id && vehiculo.Dominio != "ELIMINAD@")
+            if (vehiculo.TitularId == id && vehiculo.Marca != "ELIMINAD@")
             {
                 lista.Add(vehiculo);
             }

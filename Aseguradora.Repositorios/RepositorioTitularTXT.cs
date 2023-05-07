@@ -64,7 +64,7 @@ public class RepositorioTitularTXT : IRepositorioTitular
             using var sr = new StreamReader(_nombreArch);            
             string str = sr.ReadLine() ?? "";
             int dni = int.Parse(str.Split("*")[3]);
-            int idN = int.Parse(str.Split("*")[0]);
+            int idN = int.Parse(str.Split("*")[0]);            
             while(!sr.EndOfStream && (dni != titular.Dni))
             {
                 str = sr.ReadLine() ?? "";
@@ -86,7 +86,7 @@ public class RepositorioTitularTXT : IRepositorioTitular
                 }   
             }
         }else
-        {
+        {            
             throw new Exception($"No existe un titular registrado con el dni {titular.Dni}");
         }
       
@@ -95,7 +95,8 @@ public class RepositorioTitularTXT : IRepositorioTitular
     //El eliminar titular va a hacer una baja logica, modificando solo el nombre, y el listar solo retornara aquellos que no tengan esa modificacion
     //Para este metodo tambien sobreescribe todo el txt.
     public void EliminarTitular(int id) 
-    {            
+    {  
+
         using var sr = new StreamReader(_nombreArch);
         var t = new Titular();
         string str = sr.ReadLine() ?? "";
@@ -116,21 +117,16 @@ public class RepositorioTitularTXT : IRepositorioTitular
             t.Telefono = int.Parse(str.Split("*")[4]);
             t.Direccion = (str.Split("*")[5]);
             t.Correo = (str.Split("*")[6]);         
-        }
-        if (existeTitular(t.Dni) != -1)
-        {
-            if(t.Id == id)
+        }      
+        if(t.Id == id)
+        {               
+            
+            t.Nombre = "ELIMINAD@";
+            ModificarTitular(t);            
+        }else 
             {
-                t.Nombre = "ELIMINAD@";
-                ModificarTitular(t);
-            }
-        }
-        else 
-        {
-            throw new Exception($"No existe un Titular registrado que posea esa id");
-        }
-     
-
+                throw new Exception($"No existe un Titular registrado que posea esa id");
+            } 
     }
     ///retorna una lista con todos los titulares.
     public List<Titular> ListarTitulares()
