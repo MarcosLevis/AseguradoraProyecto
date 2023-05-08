@@ -1,0 +1,511 @@
+Como primer paso instanciamos los repositorios correspondientes a las entidades Titular, Vehiculo y Poliza
+IRepositorioTitular repoT = new RepositorioTitularTXT();
+IRepositorioVehiculo repoV = new RepositorioVehiculoTXT();
+IRepositorioPoliza repoP = new RepositorioPolizaTXT();
+
+
+Repositorio titular implementa la interface IRepositorioTitular la cual indica que metodos debe tener el 
+repositorio. Usa dos variables de solo lectura string que representaran tanto el nombre del archivo como 
+el path(camino hacia este archivo). El id es una variable privada autoincremental.
+
+
+    public class RepositorioTitularTXT : IRepositorioTitular 
+
+        readonly string path = "./titulares.txt";
+        readonly string _nombreArch = "titulares.txt";   
+        private int id = 1;
+
+   La interfaz IRepositorioTitular es la encargada de definir los metodos que va a tener que implementar la
+   clase implementadora, en este caso, todas las entidades tienen 4 casos de uso: Agregar, Listar, Modificar y 
+   Eliminar.
+  
+    public interface IRepositorioTitular
+    {
+        void AgregarTitular(Titular titular);    
+        List<Titular> ListarTitulares();
+        void ModificarTitular(Titular titular);
+        void EliminarTitular(int id);    
+    }
+
+    Los casos de uso tienen una variable readonly de tipo Repositorio segun la entidad que corresponda, un
+    constructor y un metodo Ejecutar que sera llamado en el programa principal
+
+    private readonly IRepositorioTitular _repoTitular;
+    public AgregarTitularUseCase(IRepositorioTitular repoTitular)
+    {
+        this._repoTitular = repoTitular;
+    }
+
+    public void Ejecutar(Titular titular)
+    {
+        _repoTitular.AgregarTitular(titular);
+    }
+
+    El siguiente metodo agrega un Titular recibido por parametro, comprueba que no exista un Titular ya registrado con ese Dni.
+    Luego verifica si existe un archivo de persistencia de Titulares.
+    En caso de que no exista  un txt, lo crea y escribe el Titular asignandole una id unica.
+    En caso de que exista un txt, le escribe un el Titular al final del archivo asignandole una id unica.
+
+    public void AgregarTitular(Titular titular) 
+    {        
+        if (existeTitular(titular.Dni) == -1)
+        {                                
+            if (File.Exists(path)){   
+                using var sw = new StreamWriter(_nombreArch, true);
+                {
+                    titular.Id = proximaId();
+                    sw.WriteLine($"{titular.Id}*{titular.Apellido}*{titular.Nombre}*{titular.Dni}*{titular.Telefono}*{titular.Direccion}*{titular.Correo}");
+                }            
+            }else 
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    titular.Id = id++;         
+                    sw.WriteLine($"{titular.Id}*{titular.Apellido}*{titular.Nombre}*{titular.Dni}*{titular.Telefono}*{titular.Direccion}*{titular.Correo}");                               
+                }
+        }else 
+            {
+            throw new Exception($"Ya se encuentra registrado un titular con el Dni {titular.Dni}");
+            }
+    }
+
+    El siguiente metodo retorna la siguiente id del ultimo Titular ya persistido en el text.
+    private int proximaId()
+    {        
+        int id = int.Parse(File.ReadLines(path).Last().Split("*")[0]); 
+        return id +1 ;
+    }
+
+    El siguiente metodo pregunta si existe un titular persistido con el dni ingresado por parametro.
+    (en vez de un boolean retorna la id por si la necesitamos) 
+    private int existeTitular(int dni)
+    {
+        if (File.Exists(path)){
+            using var sr = new StreamReader(_nombreArch);
+            while(!sr.EndOfStream)
+            {
+                string str = sr.ReadLine() ?? "";
+                int d = int.Parse(str.Split("*")[3]); 
+                int id = int.Parse(str.Split("*")[0]);
+                if(d == dni)
+                {
+                    return id;
+                }
+            }  
+        }                  
+        return -1;        
+    }  
+
+    //El siguiente metodo modifica un titular ingresado por parametro.
+    //Recorre todo el txt hasta encontrar la posicion del titular a modificar. 
+    //En caso de encontrarlo reescribe todo el txt modificando solo la linea que corresponde al titular a modificar.
+    // (Es ineficiente pero cumple con la consigna a modo de ejemplo, en la proxima entrega se usaran BD).
+    public void ModificarTitular(Titular titular)
+    {
+        if (existeTitular(titular.Dni) != -1)
+        {
+            using var sr = new StreamReader(_nombreArch);            
+            string str = sr.ReadLine() ?? "";
+            int dni = int.Parse(str.Split("*")[3]);
+            int idN = int.Parse(str.Split("*")[0]);            
+            while(!sr.EndOfStream && (dni != titular.Dni))
+            {
+                str = sr.ReadLine() ?? "";
+                dni = int.Parse(str.Split("*")[3]);  
+                idN = int.Parse(str.Split("*")[0]);          
+            }
+            //transforma todo el texto en un array donde cada linea es un inidice, luego me paro en el inidice = id-1 y lo sobreescribo
+            if(dni == titular.Dni)
+            {
+                string[] lines = File.ReadAllLines(path);
+                titular.Id = idN;
+                lines[idN-1] = ($"{titular.Id}*{titular.Apellido}*{titular.Nombre}*{titular.Dni}*{titular.Telefono}*{titular.Direccion}*{titular.Correo}");
+                using (StreamWriter sw = new StreamWriter(path)) 
+                {
+                    foreach (string line in lines) 
+                    {
+                        sw.WriteLine(line);
+                    }
+                }   
+            }
+        }else
+        {            
+            throw new Exception($"No existe un titular registrado con el dni {titular.Dni}");
+        }
+      
+    }
+
+    El siguiente metodo recide la id de un Titular a ser eliminado.
+    En caso de que este Titular existe persistido en el txt, lo elimina de manera LOGICA modificando 
+    su "Nombre".
+    public void EliminarTitular(int id) 
+    {  
+
+        using var sr = new StreamReader(_nombreArch);
+        var t = new Titular();
+        string str = sr.ReadLine() ?? "";
+        t.Id = int.Parse(str.Split("*")[0]);
+        t.Apellido = (str.Split("*")[1]);
+        t.Nombre = (str.Split("*")[2]);       
+        t.Dni = int.Parse(str.Split("*")[3]);
+        t.Telefono = int.Parse(str.Split("*")[4]);
+        t.Direccion = (str.Split("*")[5]);
+        t.Correo = (str.Split("*")[6]);
+        while(!sr.EndOfStream && (t.Id != id))
+        {
+            str = sr.ReadLine() ?? "";
+            t.Id = int.Parse(str.Split("*")[0]);
+            t.Apellido = (str.Split("*")[1]);
+            t.Nombre = (str.Split("*")[2]);            
+            t.Dni = int.Parse(str.Split("*")[3]);
+            t.Telefono = int.Parse(str.Split("*")[4]);
+            t.Direccion = (str.Split("*")[5]);
+            t.Correo = (str.Split("*")[6]);         
+        }      
+        if(t.Id == id)
+        {               
+            
+            t.Nombre = "ELIMINAD@";
+            ModificarTitular(t);            
+        }else 
+            {
+                throw new Exception($"No existe un Titular registrado que posea esa id");
+            } 
+    }
+
+ El siguiente metodo retorna una lista con los Titulares persistidas en el txt que no fueron 
+ eliminados de forma logica
+    public List<Titular> ListarTitulares()
+    {
+        var lista = new List<Titular>();
+        using var sr = new StreamReader(_nombreArch);
+        while (!sr.EndOfStream)
+        {
+            var titular = new Titular();
+            string str = sr.ReadLine() ?? "";
+            titular.Id = int.Parse(str.Split("*")[0]);
+            titular.Apellido = (str.Split("*")[1]);
+            titular.Nombre = (str.Split("*")[2]);            
+            titular.Dni = int.Parse(str.Split("*")[3]);
+            titular.Telefono = int.Parse(str.Split("*")[4]);
+            titular.Direccion = (str.Split("*")[5]);
+            titular.Correo = (str.Split("*")[6]);
+            if (titular.Nombre != "ELIMINAD@")
+            {
+                lista.Add(titular);
+            }
+        }
+        return lista;
+    }
+
+
+    
+Instanciamos los casos de uso:
+
+Titulares
+var agregarTitular = new AgregarTitularUseCase(repoT);
+var listarTitulares = new ListarTitularesUseCase(repoT);
+var modificarTitular = new ModificarTitularUseCase(repoT);
+var eliminarTitular = new EliminarTitularUseCase(repoT);
+
+Vehiculos
+var agregarVehiculo = new AgregarVehiculoUseCase(repoV);
+var eliminarVehiculo = new EliminarVehiculoUseCase(repoV);
+var modificarVehiculo = new ModificarVehiculoUseCase(repoV);
+var listarVehiculos = new ListarVehiculosUseCase(repoV);
+
+Polizas
+var agregarPoliza = new AgregarPolizaUseCase(repoP);
+var eliminarPoliza = new EliminarPolizaUseCase(repoP);
+var modificarPoliza= new ModificarPolizaUseCase(repoP);
+var listarPolizas = new ListarPolizasUseCase(repoP);
+
+
+El caso de uso ListarTitularesConSusVehiculos recibe ambos repositorios(Titular y Vehiculo)
+y en su metodo Ejecutar crea una lista de titulares y por cada titular en la lista, lo imprime, crea una
+lista de vehiculos e imprime todos los vehiculos correspondientes a ese titular.
+
+var listarTitularesConSusVehiculos = new ListarTitularesConSusVehiculosUseCase(repoT,repoV);
+
+ private readonly IRepositorioTitular _repoTitular;
+    private readonly IRepositorioVehiculo _repoVehiculo;
+    public ListarTitularesConSusVehiculosUseCase(IRepositorioTitular _repoTitular, IRepositorioVehiculo _repoVehiculo)
+    {
+        this._repoTitular = _repoTitular;
+        this._repoVehiculo = _repoVehiculo;
+    }
+
+    
+    public void Ejecutar()
+    {      
+        var listaT = this._repoTitular.ListarTitulares();        
+        foreach (Titular t in listaT)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Titular");
+            Console.WriteLine(t);            
+            var lista = this._repoVehiculo.ListarVehiculosDelTitular(t.Id);
+            Console.WriteLine("Vehiculos: ");
+            foreach(Vehiculo v in lista)
+            {
+                Console.WriteLine(v); 
+            }
+                
+        }
+    }
+
+    Este es el metodo que se encuentra en el RepositorioVehiculoTXT
+    El siguiente metodo retorna una lista con los Vehiculo persistidos en el txt, que no fueron eliminados de forma logica.
+    y que la Id de su Titular corresponde con la id recibida por parametro.
+
+    public List<Vehiculo> ListarVehiculosDelTitular (int id)
+    {
+        var lista = new List<Vehiculo>();
+        using var sr = new StreamReader(_nombreArch);
+        while (!sr.EndOfStream)
+        {
+            var vehiculo = new Vehiculo();
+            string str = sr.ReadLine() ?? "";
+            vehiculo.Id = int.Parse(str.Split("*")[0]);
+            vehiculo.Dominio = (str.Split("*")[1]);
+            vehiculo.Marca = (str.Split("*")[2]);
+            vehiculo.Anio = int.Parse(str.Split("*")[3]);
+            vehiculo.TitularId = int.Parse(str.Split("*")[4]);
+            if (vehiculo.TitularId == id && vehiculo.Marca != "ELIMINAD@")
+            {
+                lista.Add(vehiculo);
+            }
+        }
+        return lista;
+
+    }
+
+
+//Instanciamos Titulares
+
+Titular titular1 = new Titular(1,"Gomez","Elgomero",2275624,"micasa","gomezez.com");
+Titular titular2 = new Titular(2,"Rodriguez","Tomas",257854,"micasa","gomez@gomez.com");
+Titular titular3 = new Titular(3,"Torres","Diego",42628734,"micasa","gomez@gomom.com");
+Titular titular4 = new Titular(4,"LaExploradora","Dora",11985124,"micasa","g@gomez.com");
+Titular titularModificar = new Titular(4,"Modificado","Mod",1249824,"micasa","z@gomez.com");
+
+//Persistimos los titulares y probamos los Casos de uso 
+
+PersistirTitular(titular1);
+PersistirTitular(titular2);
+PersistirTitular(titular3);
+PersistirTitular(titular4);
+PersistirTitular(titular1);
+
+ModificarTitular(titularModificar);  
+
+EliminarTitular(1);          
+EliminarTitular(18);
+
+//Instanciamos los vehiculos de los titulares ya persistidos
+Vehiculo vehiculo1 = new Vehiculo("CDA123","Chevrolet",2012,titular2);
+Vehiculo vehiculo2 = new Vehiculo("DSA321","Ford",2011,titular3);
+Vehiculo vehiculo3 = new Vehiculo("ASE121","Ford",2012,titular3);
+Vehiculo vehiculo4 = new Vehiculo("CSA321","Ford",2013,titular4);
+Vehiculo vehiculo5 = new Vehiculo("HSA321","Ford",2014,titular4);
+Vehiculo vehiculo6 = new Vehiculo("ESA321","Ford",2015,titular4);
+Vehiculo vehiculoModificar = new Vehiculo("ASE121","Ford",2000,titular4);
+
+
+//Persistimos los vehiculos y probamos los Casos de uso 
+PersistirVehiculo(vehiculo1);
+PersistirVehiculo(vehiculo2);
+PersistirVehiculo(vehiculo3);
+PersistirVehiculo(vehiculo4);
+PersistirVehiculo(vehiculo5);
+PersistirVehiculo(vehiculo6);
+PersistirVehiculo(vehiculo1);
+
+ModificarVehiculo(vehiculoModificar);
+
+EliminarVehiculo(4);
+EliminarVehiculo(18);
+
+
+//Instanciamos las polizas de los titulares ya persisitidos
+DateTime inicio = new DateTime(2012,04,04);
+DateTime fin = new DateTime(2032,04,04);
+Poliza poliza1 = new Poliza(20030.123,"Responsabilidad Civil","Completa",inicio,fin,vehiculo1);
+Poliza poliza2 = new Poliza(29780.123,"Responsabilidad Civil","Completa",inicio,fin,vehiculo2);
+Poliza poliza3 = new Poliza(26430.123,"Responsabilidad Civil","Completa",inicio,fin,vehiculo3);
+Poliza poliza4 = new Poliza(24530.123,"Responsabilidad Civil","Completa",inicio,fin,vehiculo4);
+Poliza polizaModificar = new Poliza(9999.123,"Responsabilidad Civil","Completa",inicio,fin,vehiculo4);
+
+//Probamos los Casos de uso Poliza
+PersistirPoliza(poliza1);
+PersistirPoliza(poliza2);
+PersistirPoliza(poliza3);
+PersistirPoliza(poliza4);
+PersistirPoliza(poliza1);
+
+ModificarPoliza(polizaModificar);
+
+EliminarPoliza(2);
+EliminarPoliza(18);
+
+// Listamos todos los Titulares, Vehiculos y Poliza. Ademas los titulares con sus autos.
+ListarTitulares();
+ListarVehiculos();
+ListarPolizas();
+listarTitularesConSusVehiculos.Ejecutar();
+
+////Metodos locales////
+Los metodos locales se encargan de llamar al metodo Ejecutar de los casos de uso, implementan un try/catch
+y en el caso de que se genere una excepcion el catch imprime su mensaje
+
+void PersistirTitular(Titular titular)
+{
+    try
+    {
+        agregarTitular.Ejecutar(titular);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
+
+
+void ModificarTitular(Titular titular)
+{
+    try
+    {
+        modificarTitular.Ejecutar(titular);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
+
+
+void EliminarTitular(int id)
+{
+    try
+    {
+        eliminarTitular.Ejecutar(id);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
+
+
+void ListarTitulares()
+{
+    Console.WriteLine();
+    Console.WriteLine("Titulares:");
+    List<Titular> lista = listarTitulares.Ejecutar();
+    foreach(Titular t in lista)
+    {
+        Console.WriteLine(t);
+    }
+}
+
+
+void PersistirVehiculo(Vehiculo vehiculo)
+{
+    try
+    {
+        agregarVehiculo.Ejecutar(vehiculo);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
+
+
+void ModificarVehiculo(Vehiculo vehiculo)
+{
+    try
+    {
+        modificarVehiculo.Ejecutar(vehiculo);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
+
+
+void EliminarVehiculo(int id)
+{
+    try
+    {
+        eliminarVehiculo.Ejecutar(id);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
+
+
+void ListarVehiculos()
+{
+    Console.WriteLine();
+    Console.WriteLine("Vehiculos: ");
+    List<Vehiculo> lista = listarVehiculos.Ejecutar();
+    foreach(Vehiculo v in lista)
+    {
+        Console.WriteLine(v);
+    }
+}
+
+
+void PersistirPoliza(Poliza poliza)
+{
+    try
+    {
+        agregarPoliza.Ejecutar(poliza);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
+
+
+
+void ModificarPoliza(Poliza poliza)
+{
+    try
+    {
+        modificarPoliza.Ejecutar(poliza);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
+
+
+void EliminarPoliza(int id)
+{
+    try
+    {
+        eliminarPoliza.Ejecutar(id);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
+
+
+void ListarPolizas()
+{
+    Console.WriteLine();
+    Console.WriteLine("Polizas: ");
+    List<Poliza> lista = listarPolizas.Ejecutar();
+    foreach(Poliza p in lista)
+    {
+        Console.WriteLine(p);
+    }
+}
