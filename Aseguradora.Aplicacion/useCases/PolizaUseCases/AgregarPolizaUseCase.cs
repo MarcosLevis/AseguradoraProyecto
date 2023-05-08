@@ -1,5 +1,5 @@
 namespace Aseguradora;
-using Aseguradora.Aplicacion;
+
 public class AgregarPolizaUseCase
 {
     private readonly IRepositorioPoliza _repoPoliza;

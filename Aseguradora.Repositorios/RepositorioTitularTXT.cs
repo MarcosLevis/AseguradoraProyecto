@@ -7,7 +7,10 @@ public class RepositorioTitularTXT : IRepositorioTitular
     readonly string _nombreArch = "titulares.txt";   
     private int id = 1;
     
-    ///Si no existe el txt, lo crea y le escribe los nuevos titulares, en caso contrario escribe alfinal del txt los nuevos titulares
+    //El siguiente metodo agrega un Titular recibido por parametro, comprueba que no exista un Titular ya registrado con ese Dni.
+    //Luego verifica si existe un archivo de persistencia de Titulares.
+    //En caso de que no exista  un txt, lo crea y escribe el Titular asignandole una id unica.
+    //En caso de que exista un txt, le escribe un el Titular al final del archivo asignandole una id unica.
     public void AgregarTitular(Titular titular) 
     {        
         if (existeTitular(titular.Dni) == -1)
@@ -30,14 +33,15 @@ public class RepositorioTitularTXT : IRepositorioTitular
             }
     }
 
-    //Se queda con la ultima id ya registrada en el text y retorno el siguiente numero
+    //El siguiente metodo retorna la siguiente id del ultimo Titular ya persistido en el text.
     private int proximaId()
     {        
         int id = int.Parse(File.ReadLines(path).Last().Split("*")[0]); 
         return id +1 ;
     }
 
-    // Pregunta si existe un titular con el dni ingresado, en vez de un boolean retorna la id por si la necesitamos. 
+    // El siguiente metodo pregunta si existe un titular persistido con el dni ingresado por parametro.
+    // (en vez de un boolean retorna la id por si la necesitamos) 
     private int existeTitular(int dni)
     {
         if (File.Exists(path)){
@@ -56,7 +60,10 @@ public class RepositorioTitularTXT : IRepositorioTitular
         return -1;        
     }  
 
-    //Este metodo sobreescribe todo el txt para modificar un registro del titular, es ineficiente pero cumple con la consigna a modo de ejemplo.
+    //El siguiente metodo modifica un titular ingresado por parametro.
+    //Recorre todo el txt hasta encontrar la posicion del titular a modificar. 
+    //En caso de encontrarlo reescribe todo el txt modificando solo la linea que corresponde al titular a modificar.
+    // (Es ineficiente pero cumple con la consigna a modo de ejemplo, en la proxima entrega se usaran BD).
     public void ModificarTitular(Titular titular)
     {
         if (existeTitular(titular.Dni) != -1)
@@ -92,8 +99,8 @@ public class RepositorioTitularTXT : IRepositorioTitular
       
     }
 
-    //El eliminar titular va a hacer una baja logica, modificando solo el nombre, y el listar solo retornara aquellos que no tengan esa modificacion
-    //Para este metodo tambien sobreescribe todo el txt.
+    // El siguiente metodo recide la id de un Titular a ser eliminado.
+    //En caso de que este Titular existe persistido en el txt, lo elimina de manera LOGICA modificando su "Nombre".
     public void EliminarTitular(int id) 
     {  
 
@@ -128,7 +135,7 @@ public class RepositorioTitularTXT : IRepositorioTitular
                 throw new Exception($"No existe un Titular registrado que posea esa id");
             } 
     }
-    ///retorna una lista con todos los titulares.
+    //El siguiente metodo retorna una lista con los Titulares persistidas en el txt que no fueron eliminados de forma logica
     public List<Titular> ListarTitulares()
     {
         var lista = new List<Titular>();

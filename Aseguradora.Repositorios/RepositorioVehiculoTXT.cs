@@ -6,6 +6,10 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
 
     int id = 1;
 
+    //El siguiente metodo agrega un Vehiculo recibido por parametro, comprueba que no exista un Vehiculo ya registrado con ese Dominio.
+    //Luego verifica si existe un archivo de persistencia de Vehiculos.
+    //En caso de que no exista  un txt, lo crea y escribe el Vehiculo asignandole una id unica.
+    //En caso de que exista un txt, le escribe un el Vehiculo al final del archivo asignandole una id unica.
     public void AgregarVehiculo(Vehiculo vehiculo)        
     {   
         if ((vehiculo.Dominio != null) && !existeVehiculo(vehiculo.Dominio))
@@ -28,12 +32,13 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
         }
     }   
 
-    //Se queda con la ultima id ya registrada en el text y retorno el siguiente numero
+    //El siguiente metodo retorna la siguiente id del ultimo Vehiculo ya persistido en el text.
     private int proximaId()
     {        
         int id = int.Parse(File.ReadLines(path).Last().Split("*")[0]); 
         return id +1 ;
     }
+    // El siguiente metodo pregunta si existe un Vehiculo persistido con el Dominio ingresado por parametro.
     private Boolean existeVehiculo(string dominio)
     {
         if (File.Exists(path)){
@@ -50,7 +55,11 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
         }                  
         return false;        
     }  
-
+    //El siguiente metodo modifica un Vehiculo ingresado por parametro.
+    //Recorre todo el txt hasta encontrar la posicion del vehiculo a modificar. 
+    //En caso de encontrarlo reescribe todo el txt modificando solo la linea que corresponde al Vehiculo a modificar.
+    // (Es ineficiente pero cumple con la consigna a modo de ejemplo, en la proxima entrega se usaran BD).
+    
     public void ModificarVehiculo(Vehiculo vehiculo)
     {
         if ((vehiculo.Dominio != null) && existeVehiculo(vehiculo.Dominio))
@@ -85,6 +94,9 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
             throw new Exception($"No se encuentra registrado un vehiculo con Dominio: {vehiculo.Dominio}");
         }   
     }
+
+    // El siguiente metodo recide la id de un Vehiculo a ser eliminado.
+    //En caso de que este Vehiculo existe persistido en el txt, lo elimina de manera LOGICA modificando su "Marca".
     public void EliminarVehiculo(int id)
     {
         using var sr = new StreamReader(_nombreArch);
@@ -114,6 +126,7 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
             throw new Exception($"No se encuentra registrado un vehiculo con esa id");
         }
     }
+    //El siguiente metodo retorna una lista con los Vehiculos persistidos en el txt que no fueron eliminados de forma logica
     public List<Vehiculo> ListarVehiculos()
     {
         var lista = new List<Vehiculo>();
@@ -135,6 +148,8 @@ public class RepositorioVehiculoTXT : IRepositorioVehiculo
         return lista;
     }
 
+    //El siguiente metodo retorna una lista con los Vehiculo persistidos en el txt, que no fueron eliminados de forma logica.
+    // y que la Id de su Titular corresponde con la id recibida por parametro.
     public List<Vehiculo> ListarVehiculosDelTitular (int id)
     {
         var lista = new List<Vehiculo>();

@@ -4,6 +4,11 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
     readonly string path = "./polizas.txt";
     readonly string _nombreArch = "polizas.txt";
     int id = 1;
+
+    ///El siguiente metodo agregar poliza comprueba que no exista una poliza ya registrada para ese vehiculo enviado como parametro.
+    //Luego verifica si existe un archivo de persistencia de polizas.
+    //En caso de que no exisa  un txt, lo crea y escribe la poliza asignandole una id unica.
+    //En caso de que exista un txt, le escribe la poliza alfinal del archivo asignandole una id unica.
     public void AgregarPoliza(Poliza poliza)        
     {   
         if ((poliza.VehiculoId != null ) && !existePoliza(poliza.VehiculoId))
@@ -28,13 +33,13 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
    
     }   
 
-    //Se queda con la ultima id ya registrada en el text y retorno el siguiente numero
+    //El siguiente metodo se queda con la id de la ultima poliza ya persistida en el text y retorna el siguiente numero
     private int proximaId()
     {        
         int id = int.Parse(File.ReadLines(path).Last().Split("*")[0]); 
         return id +1 ;
     }
-
+    //El siguiente metodo verifica que exista una poliza asignada a un vehiculo pasado por parametro
     private Boolean existePoliza(int? idVehiculo)
     {
         if (File.Exists(path)){
@@ -51,6 +56,8 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
         }                  
         return false;        
     } 
+    // El siguiente metodo recibe una poliza por parametro.
+    // Luego busca su posicion en el archivo y reescribe todo el texto modificando la linea correspondiente a donde esta ubicada la poliza a modificar
     public void ModificarPoliza(Poliza poliza)
     {
         if (existePoliza(poliza.VehiculoId))
@@ -87,6 +94,8 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
         }
            
     }
+    // El siguiente metodo recide la id de una poliza a ser eliminada.
+    //En caso de que esa poliza existe la elimina de manera LOGICA modificando su "Franquicia"
     public void EliminarPoliza(int id)
     {
         using var sr = new StreamReader(_nombreArch);
@@ -120,6 +129,7 @@ public class RepositorioPolizaTXT : IRepositorioPoliza
             throw new Exception("No existe una poliza registrada con esa Id");
         }
     }
+    //El siguiente metodo retorna una lista con las polizas persistidas en el txt que no fueron eliminadas de forma logica
     public List<Poliza> ListarPolizas()
     {
         var lista = new List<Poliza>();

@@ -70,7 +70,7 @@ PersistirVehiculo(vehiculo1);
 
 ModificarVehiculo(vehiculoModificar);
 
-EliminarVehiculo(6);
+EliminarVehiculo(4);
 EliminarVehiculo(18);
 
 //Instanciamos las polizas de los titulares ya persisitidos
@@ -101,7 +101,7 @@ ListarVehiculos();
 ListarPolizas();
 listarTitularesConSusVehiculos.Ejecutar();
 
-
+//Metodos locales
 void PersistirTitular(Titular titular)
 {
     try

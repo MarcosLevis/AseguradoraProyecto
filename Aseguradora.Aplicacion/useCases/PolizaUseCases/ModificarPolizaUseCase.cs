@@ -1,8 +1,8 @@
 namespace Aseguradora;
 
 public class ModificarPolizaUseCase
-{
-       private readonly IRepositorioPoliza _repoPoliza;
+    {
+    private readonly IRepositorioPoliza _repoPoliza;
 
     public ModificarPolizaUseCase (IRepositorioPoliza repoPoliza)
     {

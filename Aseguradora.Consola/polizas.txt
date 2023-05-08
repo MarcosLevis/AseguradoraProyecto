@@ -1,4 +1,0 @@
-1*20030,123*Completa*Responsabilidad Civil*4/4/2012 00:00:00*4/4/2032 00:00:00*1
-2*29780,123*Completa*ELIMINAD@*4/4/2012 00:00:00*4/4/2032 00:00:00*2
-3*26430,123*Completa*Responsabilidad Civil*4/4/2012 00:00:00*4/4/2032 00:00:00*3
-4*9999,123*Completa*Responsabilidad Civil*4/4/2012 00:00:00*4/4/2032 00:00:00*4

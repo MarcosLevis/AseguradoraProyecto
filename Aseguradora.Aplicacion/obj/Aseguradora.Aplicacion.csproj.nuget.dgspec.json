@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj": {}
+    "/home/mark/Escritorio/teoriaNet/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj": {}
   },
   "projects": {
-    "/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj": {
+    "/home/mark/Escritorio/teoriaNet/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj",
+        "projectUniqueName": "/home/mark/Escritorio/teoriaNet/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj",
         "projectName": "Aseguradora.Aplicacion",
-        "projectPath": "/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj",
+        "projectPath": "/home/mark/Escritorio/teoriaNet/AseguradoraProyecto/Aseguradora.Aplicacion/Aseguradora.Aplicacion.csproj",
         "packagesPath": "/home/mark/.nuget/packages/",
-        "outputPath": "/home/mark/Escritorio/code/aFACU/AseguradoraProyecto/Aseguradora.Aplicacion/obj/",
+        "outputPath": "/home/mark/Escritorio/teoriaNet/AseguradoraProyecto/Aseguradora.Aplicacion/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/mark/.nuget/NuGet/NuGet.Config"

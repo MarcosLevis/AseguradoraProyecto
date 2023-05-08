@@ -1,6 +1,5 @@
-using Aseguradora.Aplicacion;
-
 namespace Aseguradora;
+using Aseguradora.Aplicacion;
 public class ModificarTitularUseCase
 {
        private readonly IRepositorioTitular _mirepo;

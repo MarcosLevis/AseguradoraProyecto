@@ -1,5 +1,4 @@
 namespace Aseguradora;
-using Aseguradora.Aplicacion;
 public class AgregarVehiculoUseCase
 {
     private readonly IRepositorioVehiculo _repoVehiculo;
